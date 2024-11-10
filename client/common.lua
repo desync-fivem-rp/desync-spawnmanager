@@ -35,7 +35,7 @@ local function freezePlayer(id, freeze)
 end
 
 RegisterNetEvent("desync-spawnmanager:SpawnCharacter")
-AddEventHandler("desync-spawnmanager:SpawnCharacter", function(spawn)
+AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords)
     DoScreenFadeOut(500)
 
     while not IsScreenFadedOut() do
@@ -45,15 +45,15 @@ AddEventHandler("desync-spawnmanager:SpawnCharacter", function(spawn)
     freezePlayer(PlayerId(), true)
 
     -- preload collisions for the spawnpoint
-    RequestCollisionAtCoord(spawn.x, spawn.y, spawn.z)
+    RequestCollisionAtCoord(coords.x, coords.y, coords.z)
 
     -- spawn the player
     local ped = PlayerPedId()
 
     -- V requires setting coords as well
-    SetEntityCoordsNoOffset(ped, spawn.x, spawn.y, spawn.z, false, false, false, true)
+    SetEntityCoordsNoOffset(ped, coords.x, coords.y, coords.z, false, false, false, true)
 
-    NetworkResurrectLocalPlayer(spawn.x, spawn.y, spawn.z, spawn.heading, true, true, false)
+    NetworkResurrectLocalPlayer(coords.x, coords.y, coords.z, coords.w, true, true, false)
 
     -- gamelogic-style cleanup stuff
     ClearPedTasksImmediately(ped)
@@ -79,7 +79,7 @@ AddEventHandler("desync-spawnmanager:SpawnCharacter", function(spawn)
         Citizen.Wait(0)
     end
 
-    ShutdownLoadingScreen()
+    ShutdownLoadingScreenNui()
 
     if IsScreenFadedOut() then
         DoScreenFadeIn(500)
