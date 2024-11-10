@@ -1,7 +1,8 @@
 -- Triggered when a character should spawn
-AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords, character)
-    local netId = source
+RegisterNetEvent("desync-spawnmanager:SpawnCharacter")
+AddEventHandler("desync-spawnmanager:SpawnCharacter", function(netId, coords, character)
     SpawnCharacter(netId, coords, character)
+    TriggerEvent("desync-core-rp:CharacterSelected2", netId, 'char1') -- temporary
 end)
 
 function SpawnCharacter(netId, coords, character)
