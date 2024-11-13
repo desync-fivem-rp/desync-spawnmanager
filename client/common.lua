@@ -1,5 +1,15 @@
 local isSpawning = false
 
+-- Handle spawn requests from other resources
+RegisterNetEvent("desync-spawnmanager:requestSpawn")
+AddEventHandler("desync-spawnmanager:requestSpawn", function(data)
+    if not data.coords or not data.characterId then return end
+    
+    -- Forward to server to handle the spawn request
+    TriggerServerEvent("desync-spawnmanager:handleSpawnRequest", data.characterId, data.coords)
+end)
+
+-- Actual spawn logic remains the same
 RegisterNetEvent("desync-spawnmanager:SpawnCharacter")
 AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords)
     -- Prevent multiple spawns
@@ -42,9 +52,6 @@ AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords)
     -- Fade back in
     DoScreenFadeIn(500)
     while not IsScreenFadedIn() do Wait(0) end
-    
-    -- Trigger character spawned event
-    TriggerEvent("desync-multichar:CharacterSpawned")
     
     -- Reset spawn lock
     Wait(1000) -- Wait a bit before allowing another spawn
