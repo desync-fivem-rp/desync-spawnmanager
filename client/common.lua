@@ -43,6 +43,9 @@ AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords)
     DoScreenFadeIn(500)
     while not IsScreenFadedIn() do Wait(0) end
     
+    -- Trigger character spawned event
+    TriggerEvent("desync-multichar:CharacterSpawned")
+    
     -- Reset spawn lock
     Wait(1000) -- Wait a bit before allowing another spawn
     isSpawning = false
