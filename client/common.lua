@@ -1,17 +1,21 @@
 local isSpawning = false
 
--- Handle spawn requests from other resources
-RegisterNetEvent("desync-spawnmanager:requestSpawn")
-AddEventHandler("desync-spawnmanager:requestSpawn", function(data)
-    if not data.coords or not data.characterId then return end
-    
-    -- Forward to server to handle the spawn request
-    TriggerServerEvent("desync-spawnmanager:handleSpawnRequest", data.characterId, data.coords)
-end)
+function Init()
+    Citizen.CreateThread(function()
+        
+    end)
+end
 
--- Actual spawn logic remains the same
-RegisterNetEvent("desync-spawnmanager:SpawnCharacter")
-AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords)
+-- Handle spawn requests from other resources
+-- RegisterNetEvent("desync-spawnmanager:requestSpawn")
+-- AddEventHandler("desync-spawnmanager:requestSpawn", function(data)
+--     if not data.coords or not data.characterId then return end
+    
+--     -- Forward to server to handle the spawn request
+--     TriggerServerEvent("desync-spawnmanager:handleSpawnRequest", data.characterId, data.coords)
+-- end)
+
+function SpawnCharacter(coords)
     -- Prevent multiple spawns
     if isSpawning then return end
     isSpawning = true
@@ -56,6 +60,12 @@ AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords)
     -- Reset spawn lock
     Wait(1000) -- Wait a bit before allowing another spawn
     isSpawning = false
+end
+
+-- Actual spawn logic remains the same
+RegisterNetEvent("desync-spawnmanager:SpawnCharacter")
+AddEventHandler("desync-spawnmanager:SpawnCharacter", function(coords)
+    SpawnCharacter(coords)
 end)
 
-
+Init()
