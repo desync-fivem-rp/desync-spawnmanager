@@ -26,7 +26,7 @@ AddEventHandler("desync-spawnmanager:RequestSpawn", function(data)
     local netId = source
 
     if not data.coords or not data.characterId then
-        -- print("no character id or coords?")
+        print("no character id or coords?")
         return
     end
 

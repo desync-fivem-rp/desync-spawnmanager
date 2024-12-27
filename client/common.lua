@@ -20,8 +20,8 @@ function SpawnCharacter(coords)
     if isSpawning then return end
     isSpawning = true
     
-    DoScreenFadeOut(500)
-    while not IsScreenFadedOut() do Wait(0) end
+    -- DoScreenFadeOut(1000)
+    -- while not IsScreenFadedOut() do Wait(0) end
     
     local ped = PlayerPedId()
     
@@ -45,17 +45,20 @@ function SpawnCharacter(coords)
     ClearPlayerWantedLevel(PlayerId())
     
     -- Wait for collision to load
-    while not HasCollisionLoadedAroundEntity(ped) do
-        Wait(0)
-    end
-    
+    -- while not HasCollisionLoadedAroundEntity(ped) do
+    --     print('1')
+    --     Wait(0)
+    -- end
+
     -- Unfreeze and show player
     FreezeEntityPosition(ped, false)
     SetEntityVisible(ped, true)
+
+    SwitchInPlayer(PlayerPedId());
     
     -- Fade back in
-    DoScreenFadeIn(500)
-    while not IsScreenFadedIn() do Wait(0) end
+    -- DoScreenFadeIn(1000)
+    -- while not IsScreenFadedIn() do Wait(0) end
     
     -- Reset spawn lock
     Wait(1000) -- Wait a bit before allowing another spawn
