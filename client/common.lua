@@ -54,7 +54,7 @@ function SpawnCharacter(coords)
     FreezeEntityPosition(ped, false)
     SetEntityVisible(ped, true)
 
-    SwitchInPlayer(PlayerPedId());
+    SwitchInPlayer(ped);
     
     -- Fade back in
     -- DoScreenFadeIn(1000)

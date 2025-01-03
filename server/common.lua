@@ -25,10 +25,15 @@ RegisterNetEvent("desync-spawnmanager:RequestSpawn")
 AddEventHandler("desync-spawnmanager:RequestSpawn", function(data)
     local netId = source
 
-    if not data.coords or not data.characterId then
-        print("no character id or coords?")
+    if not data.coords then
+        print("no coords?")
         return
     end
+
+    -- if not data.characterId then
+    --     print("no character id?")
+    --     return
+    -- end
 
     -- Handle any additional server-side validation
 
